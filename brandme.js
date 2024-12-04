@@ -439,7 +439,7 @@ function setupAnimations() {
     });
   });
 
-  const projectCards = document.querySelectorAll(".card.is-project, .video-container.is-portfolio, .portfolio-50-image");
+  const projectCards = document.querySelectorAll(".card.is-project, .video-container.is-portfolio, .portfolio-video");
 
   if (projectCards.length > 0) {
     projectCards.forEach((card) => {
