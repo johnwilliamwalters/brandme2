@@ -642,11 +642,18 @@ function formWatch() {
 
 function handleNavbarVisibility() {
   let lastScrollY = window.scrollY;
+  const nav = document.querySelector('.nav'); // Update selector to match your navbar
+  const logoNav = document.querySelector('.logo-nav'); // Update selector
+  const svgLogo = document.querySelector('.svg-logo'); // Update selector
 
   window.addEventListener("scroll", () => {
     const currentScrollY = window.scrollY;
 
-    if (currentScrollY > lastScrollY) {
+    if (currentScrollY === 0) {
+      // At the very top of the page, always show the navbar
+      nav.style.transition = "transform 0.3s ease";
+      nav.style.transform = "translateY(0)";
+    } else if (currentScrollY > lastScrollY) {
       // Scrolling down - hide the navbar
       nav.style.transition = "transform 0.3s ease";
       nav.style.transform = "translateY(-200%)";
@@ -663,6 +670,9 @@ function handleNavbarVisibility() {
     lastScrollY = currentScrollY;
   });
 }
+
+handleNavbarVisibility();
+
 
 function resetLogo() {
   if (logoNav && svgLogo) {
@@ -688,8 +698,6 @@ function hideLogo() {
   }
 }
 
-// Call the function to start handling the navbar visibility
-handleNavbarVisibility();
 
 function workVideo() {
   const video = document.getElementById("work");
