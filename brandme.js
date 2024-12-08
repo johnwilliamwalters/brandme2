@@ -640,27 +640,17 @@ function formWatch() {
   }
 }
 
+// Navbar Visibility on Scroll
 function handleNavbarVisibility() {
   let lastScrollY = window.scrollY;
-  const nav = document.querySelector('.nav'); // Update selector to match your navbar
-  const logoNav = document.querySelector('.logo-nav'); // Update selector
-  const svgLogo = document.querySelector('.svg-logo'); // Update selector
 
   window.addEventListener("scroll", () => {
     const currentScrollY = window.scrollY;
 
-    if (currentScrollY === 0) {
-      // At the very top of the page, always show the navbar
-      nav.style.transition = "transform 0.3s ease";
-      nav.style.transform = "translateY(0)";
-    } else if (currentScrollY > lastScrollY) {
+    if (currentScrollY > lastScrollY) {
       // Scrolling down - hide the navbar
       nav.style.transition = "transform 0.3s ease";
       nav.style.transform = "translateY(-200%)";
-      logoNav.style.opacity = "1";
-      logoNav.style.transition = "opacity 0.3s ease 300ms";
-      svgLogo.style.opacity = "0";
-      svgLogo.style.transition = "opacity 0.3s ease 300ms";
     } else {
       // Scrolling up - show the navbar
       nav.style.transition = "transform 0.3s ease";
@@ -738,18 +728,16 @@ function displayLogoAnimation() {
     );
   });
 }
-
 // Mobile Menu
-const mobileMenuButton = document.getElementById("mobile-menu");
-const navMobile = document.querySelector(".nav-mobile");
-const body = document.querySelector("body");
-const navLinks = document.querySelectorAll(".nav-mobile a");
-
-let menuOpen = false;
-
 mobileMenuButton.addEventListener("click", () => {
   if (!menuOpen) {
     navMobile.style.display = "block";
+
+    // Change logo color to FCF5EB when the menu opens
+    gsap.to(".logo-wrapper", {
+      color: "#FCF5EB",
+      duration: 0.3,
+    });
 
     // GSAP animation for fading in the menu
     gsap.to(navMobile, {
@@ -775,6 +763,7 @@ mobileMenuButton.addEventListener("click", () => {
     );
 
   } else {
+    
     // GSAP animation for fading out the menu
     gsap.to(navMobile, {
       opacity: 0,
