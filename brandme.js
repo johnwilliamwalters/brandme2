@@ -739,6 +739,7 @@ function displayLogoAnimation() {
   });
 }
 
+// Mobile Menu
 const mobileMenuButton = document.getElementById("mobile-menu");
 const navMobile = document.querySelector(".nav-mobile");
 const body = document.querySelector("body");
@@ -748,9 +749,9 @@ let menuOpen = false;
 
 mobileMenuButton.addEventListener("click", () => {
   if (!menuOpen) {
-    navMobile.style.display = "block";
+    navMobile.style.display = "block"; // Ensure the menu is visible
 
-    // GSAP animation for fading in the menu
+    // GSAP animation for fading in
     gsap.to(navMobile, {
       opacity: 1,
       duration: 0.3,
@@ -759,7 +760,21 @@ mobileMenuButton.addEventListener("click", () => {
 
     body.style.overflow = "hidden";
 
-    // GSAP animation for links sliding up and fading in
+    // Store the current logo color
+    const currentLogoColor = getComputedStyle(
+      document.querySelector(".logo-wrapper")
+    ).color;
+
+    // Change logo color to FCF5EB when menu opens
+    gsap.to(".logo-wrapper", {
+      color: "#FCF5EB",
+      duration: 0.3,
+      overwrite: true,
+    });
+
+    // Store the current logo color in a variable accessible to the closing event
+    mobileMenuButton.dataset.currentLogoColor = currentLogoColor;
+
     gsap.fromTo(
       navLinks,
       { y: "100%", opacity: 0 },
@@ -772,21 +787,29 @@ mobileMenuButton.addEventListener("click", () => {
         delay: 0.2,
       }
     );
-
   } else {
-    // GSAP animation for fading out the menu
+    // GSAP animation for fading out
     gsap.to(navMobile, {
       opacity: 0,
       duration: 0.3,
       ease: "ease-in-out",
       onComplete: () => {
-        navMobile.style.display = "none";
+        navMobile.style.display = "none"; // Hide the menu after fading out
       },
     });
 
     body.style.overflow = "auto";
 
-    // GSAP animation for links sliding down and fading out
+    // Retrieve the stored logo color
+    const currentLogoColor = mobileMenuButton.dataset.currentLogoColor;
+
+    // Change logo color back to the original color when menu closes
+    gsap.to(".logo-wrapper", {
+      color: currentLogoColor,
+      duration: 0.3,
+      overwrite: true,
+    });
+
     gsap.to(navLinks, {
       y: "100%",
       opacity: 0,
@@ -801,19 +824,28 @@ mobileMenuButton.addEventListener("click", () => {
 navLinks.forEach((link) => {
   link.addEventListener("click", () => {
     if (menuOpen) {
-      // GSAP animation for fading out the menu (same as above)
+      // GSAP animation for fading out (same as above)
       gsap.to(navMobile, {
         opacity: 0,
         duration: 0.3,
         ease: "ease-in-out",
         onComplete: () => {
-          navMobile.style.display = "none";
+          navMobile.style.display = "none"; // Hide the menu after fading out
         },
       });
 
       body.style.overflow = "auto";
 
-      // GSAP animation for links sliding down and fading out (same as above)
+      // Retrieve the stored logo color
+      const currentLogoColor = mobileMenuButton.dataset.currentLogoColor;
+
+      // Change logo color back to the original color when menu closes
+      gsap.to(".logo-wrapper", {
+        color: currentLogoColor,
+        duration: 0.3,
+        overwrite: true,
+      });
+
       gsap.to(navLinks, {
         y: "100%",
         opacity: 0,
@@ -825,4 +857,3 @@ navLinks.forEach((link) => {
       menuOpen = false;
     }
   });
-});
