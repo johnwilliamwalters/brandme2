@@ -739,8 +739,6 @@ function displayLogoAnimation() {
   });
 }
 
-//Mobile Menu
-
 const mobileMenuButton = document.getElementById("mobile-menu");
 const navMobile = document.querySelector(".nav-mobile");
 const body = document.querySelector("body");
@@ -750,15 +748,23 @@ let menuOpen = false;
 
 mobileMenuButton.addEventListener("click", () => {
   if (!menuOpen) {
-    navMobile.style.marginLeft = "0";
+    navMobile.style.display = "block";
+
+    // GSAP animation for fading in the menu
+    gsap.to(navMobile, {
+      opacity: 1,
+      duration: 0.3,
+      ease: "ease-in-out",
+    });
+
     body.style.overflow = "hidden";
 
-    // GSAP animation for links sliding in
+    // GSAP animation for links sliding up and fading in
     gsap.fromTo(
       navLinks,
-      { x: "100%", opacity: 0 },
+      { y: "100%", opacity: 0 },
       {
-        x: "0%",
+        y: "0%",
         opacity: 1,
         duration: 0.3,
         stagger: 0.1,
@@ -766,13 +772,23 @@ mobileMenuButton.addEventListener("click", () => {
         delay: 0.2,
       }
     );
+
   } else {
-    navMobile.style.marginLeft = "100vw";
+    // GSAP animation for fading out the menu
+    gsap.to(navMobile, {
+      opacity: 0,
+      duration: 0.3,
+      ease: "ease-in-out",
+      onComplete: () => {
+        navMobile.style.display = "none";
+      },
+    });
+
     body.style.overflow = "auto";
 
-    // GSAP animation for links sliding out
+    // GSAP animation for links sliding down and fading out
     gsap.to(navLinks, {
-      x: "100%",
+      y: "100%",
       opacity: 0,
       duration: 0.3,
       stagger: 0.1,
@@ -785,12 +801,21 @@ mobileMenuButton.addEventListener("click", () => {
 navLinks.forEach((link) => {
   link.addEventListener("click", () => {
     if (menuOpen) {
-      navMobile.style.marginLeft = "100vw";
+      // GSAP animation for fading out the menu (same as above)
+      gsap.to(navMobile, {
+        opacity: 0,
+        duration: 0.3,
+        ease: "ease-in-out",
+        onComplete: () => {
+          navMobile.style.display = "none";
+        },
+      });
+
       body.style.overflow = "auto";
 
-      // GSAP animation for links sliding out (same as above)
+      // GSAP animation for links sliding down and fading out (same as above)
       gsap.to(navLinks, {
-        x: "100%",
+        y: "100%",
         opacity: 0,
         duration: 0.3,
         stagger: 0.1,
