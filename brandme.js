@@ -729,6 +729,13 @@ function displayLogoAnimation() {
   });
 }
 // Mobile Menu
+const mobileMenuButton = document.getElementById("mobile-menu");
+const navMobile = document.querySelector(".nav-mobile");
+const body = document.querySelector("body");
+const navLinks = document.querySelectorAll(".nav-mobile a");
+
+let menuOpen = false;
+
 mobileMenuButton.addEventListener("click", () => {
   if (!menuOpen) {
     navMobile.style.display = "block";
