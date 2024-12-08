@@ -3,7 +3,7 @@ const nav = document.querySelector(".nav");
 const logoNav = document.querySelector(".logo.is-nav");
 const svgLogo = document.querySelector(".svg-logo");
 
-//Barba Set-up
+//Barba Set-up hi
 
 //Barba Hook - Enter - // Update lastPage URL, set the next container to centered, kill scroll triggers and GSAP timelines, and reset Webflow transitions
 
